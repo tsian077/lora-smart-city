@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>hello</h1>
+
+    <script>
+        //  fetch('/get/data',{method:"get"}).then((response)=>{ 
+        //         return response.json()
+            
+                
+        //       }).then((data)=>{
+        //         console.log(data)
+                
+        //       });
+
+
+        // fetch('https://works.ioa.tw/weather/api/weathers/1.json',{method:"get"}).then((response)=>{
+        //   return response.json()
+        // }).then((data)=>{
+        //   console.log(data)
+        // })
+
+        var weather = [];
+        fetch('https://works.ioa.tw/weather/api/cates/1.json',{method:"get"}).then((response)=>{
+          return response.json()
+        }).then((data)=>{
+          // console.log(data.towns)
+          data.towns.forEach(element =>{
+           
+            // console.log(element.position)
+            
+            fetch(`https://works.ioa.tw/weather/api/weathers/${element.id}.json`,{method:"get"}).then((response)=>{
+                  return response.json()
+            }).then((data)=>{
+              var temp = {}
+              temp['id']=element.id
+              temp['position'] = element.position 
+              temp['data']=data
+              temp['name']=element.name
+                // console.log(element.id)
+                // console.log(element.position)
+                // console.log(data)
+              // console.log(temp)
+              weather[element.id]=temp
+              
+            })
+            console.log(weather)
+          })
+        })
+        
+        
+        
+    </script>
+</body>
+</html>
